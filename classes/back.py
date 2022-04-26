@@ -4,9 +4,11 @@ import qalsadi.lemmatizer
 
 # nltk.download()
 
+def load_file():
+    pass
+
 def segment_text(inp):
     seg = nltk.data.load('tokenizers/punkt/english.pickle').tokenize(inp)
-
     return seg
 
 
@@ -24,7 +26,6 @@ def stem_text(inp):
     out = []
     for i in token:
         out.append(nltk.ISRIStemmer().stem(i))
-
     return out
 
 
@@ -45,4 +46,3 @@ def stopword_removal(inp):
             processed_tokens.remove(i)
 
     return processed_tokens
-
