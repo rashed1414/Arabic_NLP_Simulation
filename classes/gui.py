@@ -5,27 +5,29 @@ from PIL import ImageTk, Image
 class App:
 
     def __init__(self, parent, width=600, height=800, columns=10, rows=10, photo_path="images/Back.png"):
+
         self.parent = parent
         self.width = width
         self.height = height
         self.columns = columns
         self.rows = rows
         self.photo_path = photo_path
-        self.imgs = []
+        self.images = []
         self.img_num = 0
+        self.circle_width = None
+        self.circle_height = None
         self.lemmatize = None
         self.stemming = None
         self.stop_word_removal = None
         self.tokenize = None
         self.segment = None
-        self.pos_tagging = None
         self.ml_process = None
         self.segment_bar = None
         self.tokenize_bar = None
         self.stop_word_bar = None
         self.stemming_bar = None
         self.lemmatize_bar = None
-        self.pos_tagging_bar = None
+        self.ml_process_bar = None
         self.bg_image = None
         self.canva = None
         self.create_canvas(self.photo_path)
@@ -51,23 +53,23 @@ class App:
         if button_photo is not None:
             img = Image.open(button_photo)
             ph = ImageTk.PhotoImage(img.resize((wid, hig)))
-            self.imgs.append(ph)
+            self.images.append(ph)
         else:
-            self.imgs.append(None)
+            self.images.append(None)
 
         btn_label = StringVar()
         btn = Button(self.parent, textvariable=btn_label, command=func, font='Raleway', bg='#CCB0D5', fg='#3c4043',
-                     height=hig, width=wid, image=self.imgs[self.img_num])
+                     height=hig, width=wid, image=self.images[self.img_num])
         btn_label.set(txt)
         btn.grid(column=y, row=x)
         self.img_num += 1
 
     def create_pipline(self):
-        circle_height = self.height / 5
-        circle_width = self.width / 5
+        self.circle_height = self.height / 5
+        self.circle_width = self.width / 5
 
-        self.create_circles(circle_height, circle_width)
-        self.create_bars(circle_height, circle_width)
+        self.create_circles(self.circle_height, self.circle_width)
+        self.create_bars(self.circle_height, self.circle_width)
 
     def create_circles(self, circle_height, circle_width):
         self.segment = self.canva.create_oval(10, 0, circle_width, circle_height,
@@ -87,13 +89,8 @@ class App:
                                                 outline="white", fill="white",
                                                 width=2)
 
-        self.pos_tagging = self.canva.create_oval(circle_width + 40, (circle_height * 4 + 10),
-                                                  circle_width * 2 + 30, circle_height * 5,
-                                                  outline="white", fill="white",
-                                                  width=2)
-
-        self.ml_process = self.canva.create_oval(circle_width * 2 + 70, (circle_height * 4 + 10),
-                                                 circle_width * 3 + 60, circle_height * 5,
+        self.ml_process = self.canva.create_oval(circle_width + 40, (circle_height * 4 + 10),
+                                                 circle_width * 2 + 30, circle_height * 5,
                                                  outline="white", fill="white",
                                                  width=2)
 
@@ -122,7 +119,3 @@ class App:
         self.lemmatize_bar = self.canva.create_rectangle(circle_width - 10, start_y, circle_width * 1.25, end_y,
                                                          outline="white", fill="white",
                                                          width=2)
-
-        self.pos_tagging_bar = self.canva.create_rectangle(circle_width * 2 + 20, start_y, circle_width * 2.4, end_y,
-                                                           outline="white", fill="white",
-                                                           width=2)

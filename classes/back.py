@@ -1,11 +1,34 @@
 import nltk
 import qalsadi.lemmatizer
+import easygui
+import os
 
 
 # nltk.download()
+def create_msg_box(text, title):
+    return easygui.msgbox(text, title=title)
+
+
+def get_file_path(msg="please Choose a TxT file", title="Choose file"):
+    file = easygui.fileopenbox(msg=msg, title=title, filetypes='*.txt')
+    return file
+
+
+def check_file_path():
+
+    file_path = get_file_path()
+    filename, file_extension = os.path.splitext(file_path)
+    if file_extension == ".txt":
+        return file_path
+
 
 def load_file():
-    pass
+    file_path = check_file_path()
+    file = open(file_path, 'r')
+    string = " ".join(line.strip() for line in file)
+    file.close()
+    return string
+
 
 def segment_text(inp):
     seg = nltk.data.load('tokenizers/punkt/english.pickle').tokenize(inp)
