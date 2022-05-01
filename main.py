@@ -4,7 +4,7 @@ from classes.back import *
 from classes.gui import App
 
 root = Tk()
-app = App(root, 1000, 1000)
+app = App(root, 500, 500)
 
 inp_txt = app.create_txt_box(5, 50, 10, 10, 5, 1)
 

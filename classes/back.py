@@ -2,6 +2,8 @@ import nltk
 import qalsadi.lemmatizer
 import easygui
 import os
+from sklearn.feature_extraction.text import TfidfVectorizer
+import pickle
 
 
 # nltk.download()
@@ -15,7 +17,6 @@ def get_file_path(msg="please Choose a TxT file", title="Choose file"):
 
 
 def check_file_path():
-
     file_path = get_file_path()
     filename, file_extension = os.path.splitext(file_path)
     if file_extension == ".txt":
@@ -69,3 +70,15 @@ def stopword_removal(inp):
             processed_tokens.remove(i)
 
     return processed_tokens
+
+
+def predict_txt(inp):
+    vectorizer = TfidfVectorizer()
+    inp_tfidf = vectorizer.fit_transform([inp])
+    file_name = open('models/Naive_Bayes_model.sav', 'rb')
+    loaded_model = pickle.load(file_name)
+    result = loaded_model.predict(inp_tfidf)
+    print(result)
+
+
+predict_txt("كيف حالك يا صديقي")
