@@ -1,24 +1,25 @@
 from tkinter import *
 from awesometkinter.bidirender import render_text
-from classes.back import *
+from classes.back import AppWork
 from classes.gui import App
 
+do = AppWork()
 root = Tk()
-app = App(root, 500, 500)
+app = App(root, 1000, 1000)
 
 inp_txt = app.create_txt_box(5, 50, 10, 10, 5, 1)
 
 
 def load_txt_btn():
     try:
-        inp_txt.insert(-1.0, render_text(load_file()))
+        inp_txt.insert(-1.0, render_text(do.load_file()))
     except(TypeError, AttributeError):
-        create_msg_box("Please Choose txt fil with .txt extension", "Alert")
+        do.create_msg_box("Please Choose txt fil with .txt extension", "Alert")
 
 
 def segment_btn_act():
     out_txt_seg = app.create_txt_box(4, 50, 10, 10, 5, 2)
-    seg = segment_text(inp_txt.get('1.0', END))
+    seg = do.segment_text(inp_txt.get('1.0', END))
     for i in seg:
         out_txt_seg.insert('-1.0', render_text("" + i + ", "))
     app.canva.itemconfigure(app.segment, outline='white', fill="#94b53c")
@@ -29,7 +30,7 @@ def segment_btn_act():
 
 def tokenize_btn_act():
     out_txt_tok = app.create_txt_box(4, 50, 10, 10, 5, 3)
-    tok = tokenize_text(inp_txt.get('1.0', END))
+    tok = do.tokenize_text(inp_txt.get('1.0', END))
     for i in tok:
         out_txt_tok.insert('-1.0', render_text("" + i + ", "))
     app.canva.itemconfigure(app.tokenize, outline='white', fill="#94b53c")
@@ -41,7 +42,7 @@ def tokenize_btn_act():
 
 def stop_btn_act():
     out_txt_stop = app.create_txt_box(4, 50, 10, 10, 5, 4)
-    stop = stopword_removal(inp_txt.get('1.0', END))
+    stop = do.stopword_removal(inp_txt.get('1.0', END))
     for i in stop:
         out_txt_stop.insert('-1.0', render_text("" + i + ", "))
     app.canva.itemconfigure(app.stop_word_removal, outline='white', fill="#94b53c")
@@ -52,7 +53,7 @@ def stop_btn_act():
 
 def stem_btn_act():
     out_txt_stem = app.create_txt_box(4, 50, 10, 10, 5, 5)
-    stem = stem_text(inp_txt.get('1.0', END))
+    stem = do.stem_text(inp_txt.get('1.0', END))
     for i in stem:
         out_txt_stem.insert('-1.0', render_text("" + i + ", "))
     app.canva.itemconfigure(app.stemming, outline='white', fill="#94b53c")
@@ -63,7 +64,7 @@ def stem_btn_act():
 
 def lemma_btn_act():
     out_txt_lemma = app.create_txt_box(4, 50, 10, 10, 5, 5)
-    lemma = lemmatize_text(inp_txt.get('1.0', END))
+    lemma = do.lemmatize_text(inp_txt.get('1.0', END))
     for i in lemma:
         out_txt_lemma.insert('-1.0', render_text("" + i + ", "))
     app.canva.itemconfigure(app.lemmatize, outline='white', fill="#94b53c")
@@ -74,8 +75,9 @@ def lemma_btn_act():
 
 def ml_btn_act():
     app.canva.itemconfigure(app.ml_process, outline='white', fill="#94b53c")
-    app.canva.create_text(app.circle_width*1.5, app.circle_height * 4.5, text=" -- ",
-                          fill="darkblue", font="Times 20 italic bold")
+    result = app.canva.create_text(app.circle_width * 1.5, app.circle_height * 4.6,
+                                   text=render_text(do.predict_txt(inp_txt.get('1.0', END))),
+                                   fill="darkblue", font="Times 20 italic bold")
 
 
 def simulate_btn():
@@ -95,9 +97,8 @@ def main():
     app.create_button(2, 9, "images/tokenize.png", 120, 120, tokenize_btn_act)
     app.create_button(3, 9, "images/stopremoval.png", 120, 120, stop_btn_act)
     app.create_button(4, 9, "images/stem.png", 120, 120, stem_btn_act)
-    app.create_button(5, 9, "images/lema.png", 120, 120, lemma_btn_act)
-    app.create_button(6, 9, "images/lema.png", 120, 120, ml_btn_act
-)
+    app.create_button(5, 9, "images/lemma.png", 120, 120, lemma_btn_act)
+    app.create_button(6, 9, "images/lemma.png", 120, 120, ml_btn_act)
 
 
 if __name__ == "__main__":
