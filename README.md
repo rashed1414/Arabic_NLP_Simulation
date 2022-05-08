@@ -49,9 +49,9 @@ this project build with python 3.10.0
 Few Steps to get every thing work fine with you.
 
 ### Prerequisites
-In order to use these file you must have :  
+In order to use these file you should have :  
 
-1. python 3.8.0+
+1. python 3.7.0+
 2. required library to run the project 
 
 ### Installation
