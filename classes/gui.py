@@ -4,7 +4,7 @@ from PIL import ImageTk, Image
 
 class App:
 
-    def __init__(self, parent, width=600, height=800, columns=10, rows=10, photo_path="images/Back.png"):
+    def __init__(self, parent, width=1000, height=1000, columns=10, rows=10, photo_path="images/Back.png"):
 
         self.parent = parent
         self.width = width

@@ -79,7 +79,20 @@ then create the environment using
 <!-- USAGE EXAMPLES -->
 ## Usage
 
-here are some screenshots from app
+here are some screenshots from app :
+
+  <img
+     width="450"  height="400"
+     align="left" src="screenshots/1.png"
+      />
+  <img
+     width="450"  height="400"
+     align="left" src="screenshots/2.png"
+      />
+ <img
+     width="450"  height="400"
+     align="left" src="screenshots/3.png"
+      />
 
 
 

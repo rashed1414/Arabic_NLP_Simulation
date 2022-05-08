@@ -4,6 +4,8 @@ import qalsadi.lemmatizer
 import easygui
 import os
 import pickle
+from statistics import mode
+
 
 
 # nltk.download()
@@ -40,7 +42,6 @@ class AppWork:
         out = []
         for i in token:
             out.append(i)
-
         return out
 
     def stem_text(self, inp):
@@ -55,7 +56,6 @@ class AppWork:
         out = []
         for i in token:
             out.append(qalsadi.lemmatizer.Lemmatizer().lemmatize(i))
-
         return out
 
     def stopword_removal(self, inp):
@@ -64,19 +64,20 @@ class AppWork:
         for i in processed_tokens:
             if i in arb_stopwords:
                 processed_tokens.remove(i)
-
         return processed_tokens
 
     def decoder(self, val):
-        print(val)
-        if val[0] == 0:
+        if val == 0:
             return "نص سيئ"
         else:
             return "نص جيد"
 
     def predict_txt(self, inp):
+        pre_txt = self.stopword_removal(inp)
         vectorizer = pickle.load(open(str(pathlib.Path(__file__).parent.parent) + "/models/vectorizer.pickle", 'rb'))
         file_name = open(str(pathlib.Path(__file__).parent.parent) + '/models/Naive_Bayes_model.sav', 'rb')
         loaded_model = pickle.load(file_name)
-        result = loaded_model.predict(vectorizer.transform([inp]))
-        return self.decoder(result)
+        result = loaded_model.predict(vectorizer.transform(pre_txt))
+        out=mode(result)
+        return self.decoder(out)
+
