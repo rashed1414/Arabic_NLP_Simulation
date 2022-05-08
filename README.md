@@ -76,8 +76,18 @@ then create the environment using
   ```sh
   virtualenv <environment name>
   ```
+
+<!-- CONTACT -->
+
+## Contact
+
+RASHED - [LinkedIn](https://www.linkedin.com/in/14-rashed/) - rashed.work609@gmail.com
+
+
+
 <!-- USAGE EXAMPLES -->
-## Usage
+
+## Usage Example
 
 here are some screenshots from app :
 
@@ -87,7 +97,7 @@ here are some screenshots from app :
       />
   <img
      width="450"  height="400"
-     align="left" src="screenshots/2.png"
+     align="right" src="screenshots/2.png"
       />
  <img
      width="450"  height="400"
@@ -96,10 +106,6 @@ here are some screenshots from app :
 
 
 
-<!-- CONTACT -->
-## Contact
-
-RASHED - [LinkedIn](https://www.linkedin.com/in/14-rashed/) - rashed.work609@gmail.com
 
 
 
