@@ -62,7 +62,7 @@ to install modules in requirements.txt
 This is an example of how to list things you need to use the software and how to install them.
 * requirements.txt
   ```sh
-  pip install -r requirements.txt.txt
+  pip install -r requirements.txt
   ```
 it's recommended to create virtual environment and install modules in it 
 in order create virtual environment  first you should have virtualenv module.
@@ -82,7 +82,6 @@ then create the environment using
 ## Contact
 
 RASHED - [LinkedIn](https://www.linkedin.com/in/14-rashed/) - rashed.work609@gmail.com
-
 
 
 <!-- USAGE EXAMPLES -->
