@@ -49,9 +49,9 @@ this project build with python 3.10.0
 Few Steps to get every thing work fine with you.
 
 ### Prerequisites
-In order to use these file you must have :  
+In order to use these file you should have :  
 
-1. python 3.8.0+
+1. python 3.7.0+
 2. required library to run the project 
 
 ### Installation
@@ -62,7 +62,7 @@ to install modules in requirements.txt
 This is an example of how to list things you need to use the software and how to install them.
 * requirements.txt
   ```sh
-  pip install -r requirements.txt.txt
+  pip install -r requirements.txt
   ```
 it's recommended to create virtual environment and install modules in it 
 in order create virtual environment  first you should have virtualenv module.
@@ -76,8 +76,17 @@ then create the environment using
   ```sh
   virtualenv <environment name>
   ```
+
+<!-- CONTACT -->
+
+## Contact
+
+RASHED - [LinkedIn](https://www.linkedin.com/in/14-rashed/) - rashed.work609@gmail.com
+
+
 <!-- USAGE EXAMPLES -->
-## Usage
+
+## Usage Example
 
 here are some screenshots from app :
 
@@ -87,7 +96,7 @@ here are some screenshots from app :
       />
   <img
      width="450"  height="400"
-     align="left" src="screenshots/2.png"
+     align="right" src="screenshots/2.png"
       />
  <img
      width="450"  height="400"
@@ -96,10 +105,6 @@ here are some screenshots from app :
 
 
 
-<!-- CONTACT -->
-## Contact
-
-RASHED - [LinkedIn](https://www.linkedin.com/in/14-rashed/) - rashed.work609@gmail.com
 
 
 
