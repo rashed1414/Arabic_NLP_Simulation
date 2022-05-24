@@ -104,7 +104,7 @@ here are some screenshots from app :
       />
 <img
      width="450"  height="400"
-     align="left" src="screenshots/4.png"
+     align="right" src="screenshots/4.png"
       />
 
 
