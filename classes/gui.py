@@ -6,7 +6,9 @@ used in: main.py
 """
 
 from tkinter import *
+from tkinter import messagebox
 from PIL import ImageTk, Image
+from pandastable import Table
 
 
 class App:
@@ -15,7 +17,9 @@ class App:
     contains the main window,buttons,labels,images,Pipline shape,etc.
     this class contain : 1 init Function and 7 functions for the gui
     """
-    def __init__(self, parent, width=1000, height=1000, columns=10, rows=10, photo_path="images/Back.png"):
+
+    def __init__(self, parent, width=1000, height=1000, columns=10, rows=10,
+                 photo_path="images/Back.png", canvas_type='pack'):
         """
         init function for the gui
         :param parent: tkinter parent (main window)
@@ -24,8 +28,10 @@ class App:
         :param columns: columns of the main window(default=10)(int)
         :param rows: rows of the main window(default=10)(int)
         :param photo_path: path of the background image(default="images/Back.png")(str)
+        :param canvas_type: type of the canvas(default="pack")(str)
         """
 
+        self.canvas_type = canvas_type
         self.parent = parent
         self.width = width
         self.height = height
@@ -50,20 +56,24 @@ class App:
         self.ml_process_bar = None
         self.bg_image = None
         self.canva = None
-        self.create_canvas(self.photo_path)
+        self.create_canvas(self.photo_path, self.canvas_type)
 
-    def create_canvas(self, photo):
+    def create_canvas(self, photo, canvas_type):
         """
         create the canvas for the gui
+        :param canvas_type: type of the canvas(default="pack")(str)
         :param photo: background image path(str)
         :create: canvas With the background image
         """
+
         self.canva = Canvas(self.parent, width=self.width, height=self.height)
         img = Image.open(photo)
         self.bg_image = ImageTk.PhotoImage(img.resize((self.height, self.width)))
         self.canva.create_image(0, 0, anchor=NW, image=self.bg_image)
-        self.canva.grid(columnspan=self.columns, rowspan=self.rows)
-        self.create_pipline()
+        if canvas_type == 'pack':
+            self.canva.pack()
+        else:
+            self.canva.grid(columnspan=self.columns, rowspan=self.rows)
 
     def create_txt(self, txt, x, y, font_type='Raleway', font_color="#23a9f2"):
         """
@@ -76,21 +86,28 @@ class App:
         :create: label with the given text
         """
         txt = Label(self.parent, text=txt, font=font_type, bg=font_color)
-        txt.grid(column=y, row=x)
+        if self.canvas_type == 'pack':
+            txt.place(x=x, y=y)
+        else:
+            txt.grid(row=y, column=x)
 
-    def create_txt_box(self, hei, wid, pad_x, pad_y, col, ro):
+    def create_txt_box(self, hei, wid, pad_x, pad_y, x, y):
         """
         create a text box
+        :param y: y coordinate(int)
+        :param x: x coordinate(int)
         :param hei: height of the text box(int)
         :param wid: width of the text box(int)
         :param pad_x: padding x(int)
         :param pad_y: padding y(int)
-        :param col: position of the text box in the grid(int) column
-        :param ro: position of the text box in the grid(int) row
         :return: text box(tkinter text)
         """
         txt_box = Text(self.parent, height=hei, width=wid, padx=pad_x, pady=pad_y)
-        txt_box.grid(column=col, row=ro)
+        if self.canvas_type == 'pack':
+            txt_box.place(x=x, y=y)
+
+        else:
+            txt_box.grid(row=y, column=x)
         return txt_box
 
     def create_button(self, x, y, button_photo=None, wid=200, hig=200, func=None, txt=""):
@@ -116,20 +133,31 @@ class App:
         btn = Button(self.parent, textvariable=btn_label, command=func, font='Raleway', bg='#CCB0D5', fg='#3c4043',
                      height=hig, width=wid, image=self.images[self.img_num])
         btn_label.set(txt)
-        btn.grid(column=y, row=x)
+        if self.canvas_type == 'pack':
+            btn.place(x=x, y=y)
+        else:
+            btn.grid(row=y, column=x)
         self.img_num += 1
 
-    def create_pipline(self):
+    def show_table(self, df, width, height):
+        """ show the dataframe in a table format """
+
+        pt = Table(self.parent, dataframe=df, showtoolbar=True,
+                   showstatusbar=True, width=width, height=height)
+        pt.show()
+
+    def show_pipline(self, visible=False):
         """
         create the pipline for the gui
         :use: create_circle,create_bars
         :create: pipline with the given properties
         """
-        self.circle_height = self.height / 5
-        self.circle_width = self.width / 5
+        if visible:
+            self.circle_height = self.height / 5
+            self.circle_width = self.width / 5
 
-        self.create_circles(self.circle_height, self.circle_width)
-        self.create_bars(self.circle_height, self.circle_width)
+            self.create_circles(self.circle_height, self.circle_width)
+            self.create_bars(self.circle_height, self.circle_width)
 
     def create_circles(self, circle_height, circle_width):
         """
@@ -191,3 +219,42 @@ class App:
         self.lemmatize_bar = self.canva.create_rectangle(circle_width - 10, start_y, circle_width * 1.25, end_y,
                                                          outline="white", fill="white",
                                                          width=2)
+
+    def close_window(self):
+        """
+        close the window
+        """
+        self.parent.withdraw()
+
+    def show_window(self):
+        """
+        show the window
+        """
+        self.parent.deiconify()
+
+    def destroy_window(self):
+        """
+        destroy the window
+        """
+        self.parent.destroy()
+
+    def construct_window(self):
+        """
+        construct the window
+        """
+        self.parent.tkraise()
+
+    def window_status(self):
+        """
+        check if the window is open
+        """
+
+        return self.parent.state()
+
+    def on_close(self):
+        """
+        close the window
+        """
+        response = messagebox.askyesno('Exit', 'Are you sure you want to exit?')
+        if response:
+            self.parent.destroy()

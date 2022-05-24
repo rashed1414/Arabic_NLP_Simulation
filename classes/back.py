@@ -6,12 +6,16 @@ AppWork class used by main.py file to implement the processing of NLP
 """
 
 import pathlib
+import sys
+
 import nltk
-import qalsadi.lemmatizer
+import pandas as pd
+from qalsadi import lemmatizer, analex
 import easygui
 import os
 import pickle
 from statistics import mode
+from awesometkinter.bidirender import render_text
 
 
 # nltk.download()
@@ -88,7 +92,6 @@ class AppWork:
         token = nltk.tokenize.wordpunct_tokenize(inp)
         return token
 
-
     def stem_text(self, inp):
         """
         This Function is used to stem the text
@@ -115,7 +118,7 @@ class AppWork:
         token = self.tokenize_text(inp)
         lemma = []
         for i in token:
-            lemma.append(qalsadi.lemmatizer.Lemmatizer().lemmatize(i))
+            lemma.append(lemmatizer.Lemmatizer().lemmatize(i))
         return lemma
 
     def stopword_removal(self, inp):
@@ -160,3 +163,32 @@ class AppWork:
         result = loaded_model.predict(vectorizer.transform(pre_txt))
         out = mode(result)
         return self.decoder(int(out))
+
+    def morph_analysis_txt(self, inp):
+        """
+        This Function is used to morph the text
+        :param inp: the text that will be morphed (string)
+        :used by: main.py
+        :uses: tokenize_text()
+        :return: the morph dataframe (dataframe)
+        """
+        text = inp
+        print(text)
+
+        analyzer = analex.Analex()
+        analyzer.set_debug(False)
+        result = analyzer.check_text(text)
+        word_list = []
+        for word in result:
+            for description in word:
+                desc_list = [description.word, description.vocalized, description.type, description.affix,
+                             description.root,
+                             description.tags, description.stem, description.affix_key, description.type,
+                             description.tag_original_number, description.tag_original_gender, description.word]
+
+                if sys.platform == 'linux':
+                    word_list.append(map(render_text, desc_list))
+                else:
+                    word_list.append(desc_list)
+
+        return pd.DataFrame(word_list)
